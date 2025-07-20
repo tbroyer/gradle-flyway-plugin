@@ -91,3 +91,4 @@ From a developer's point of view, once the project is configured, tasks are name
 `configurationFile`  | `db/flyway.conf` in the _main_ source set, if the `java` plugin is applied | | The configuration file to use; must be a properties file encoded in UTF-8.
 `configuration`      | All the Gradle properties whose name start with `flyway.` | | The configuration properties, overwriting the ones from the `configurationFile`.
 `target`             | | `--target` | (Only on tasks where it makes sense, i.e. `flywayMigrate`) The target version up to which Flyway should consider migrations.
+`javaLauncher`       | Based on the project's `java.toolchain`, if the `java-base` plugin is applied | | (only on tasks, not the extension) The java executable used to run Flyway.
