@@ -135,6 +135,9 @@ class FlywayPluginTest {
     flywayExtension.getConfigurationFile().set(project.file("flyway.conf"));
     flywayExtension.getMigrationLocations().from(project.file("migrations"));
 
+    // Create a new custom task to check it's wired to the extension too
+    project.getTasks().register("flywayMigrateData", FlywayMigrate.class);
+
     project
         .getTasks()
         .withType(FlywayTask.class)

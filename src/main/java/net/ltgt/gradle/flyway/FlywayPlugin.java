@@ -52,7 +52,9 @@ abstract class FlywayPlugin implements Plugin<Project> {
 
     FlywayExtension flywayExtension = registerExtension(project);
 
-    registerTasks(project, flywayClasspathConfiguration, flywayExtension);
+    configureTaskDefaults(project, flywayClasspathConfiguration, flywayExtension);
+
+    registerTasks(project);
 
     project
         .getPluginManager()
@@ -89,51 +91,16 @@ abstract class FlywayPlugin implements Plugin<Project> {
     return flywayExtension;
   }
 
-  private void registerTasks(
-      Project project,
-      @SuppressWarnings("UnstableApiUsage")
-          NamedDomainObjectProvider<ResolvableConfiguration> flywayClasspathConfiguration,
-      FlywayExtension flywayExtension) {
-    registerTask(
-        "flywayMigrate",
-        FlywayMigrate.class,
-        "Migrates the schema to the latest version.",
-        project,
-        flywayClasspathConfiguration,
-        flywayExtension);
-    registerTask(
-        "flywayRepair",
-        FlywayRepair.class,
-        "Repairs the schema history table.",
-        project,
-        flywayClasspathConfiguration,
-        flywayExtension);
-    registerTask(
-        "flywayClean",
-        FlywayClean.class,
-        "Drops all objects in the configured schemas.",
-        project,
-        flywayClasspathConfiguration,
-        flywayExtension);
-  }
-
   @SuppressWarnings("UnstableApiUsage")
-  private void registerTask(
-      String taskName,
-      Class<? extends FlywayTask> flywayTaskClass,
-      String description,
+  private void configureTaskDefaults(
       Project project,
       NamedDomainObjectProvider<ResolvableConfiguration> flywayClasspathConfiguration,
       FlywayExtension flywayExtension) {
     project
         .getTasks()
-        .register(
-            taskName,
-            flywayTaskClass,
+        .withType(FlywayTask.class)
+        .configureEach(
             task -> {
-              task.setGroup("Flyway");
-              task.setDescription(description);
-
               task.getClasspath().from(flywayClasspathConfiguration);
               task.getUrl().convention(flywayExtension.getUrl());
               task.getUser().convention(flywayExtension.getUser());
@@ -145,6 +112,33 @@ abstract class FlywayPlugin implements Plugin<Project> {
                     .getMigrationLocations()
                     .from(flywayExtension.getMigrationLocations());
               }
+            });
+  }
+
+  private void registerTasks(Project project) {
+    registerTask(
+        project,
+        "flywayMigrate",
+        FlywayMigrate.class,
+        "Migrates the schema to the latest version.");
+    registerTask(project, "flywayRepair", FlywayRepair.class, "Repairs the schema history table.");
+    registerTask(
+        project, "flywayClean", FlywayClean.class, "Drops all objects in the configured schemas.");
+  }
+
+  private void registerTask(
+      Project project,
+      String taskName,
+      Class<? extends FlywayTask> flywayTaskClass,
+      String description) {
+    project
+        .getTasks()
+        .register(
+            taskName,
+            flywayTaskClass,
+            task -> {
+              task.setGroup("Flyway");
+              task.setDescription(description);
             });
   }
 
