@@ -1,0 +1,28 @@
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+# Try to maintain entries sorted alphabetically inside each "group".
+[versions]
+flyway = "11.10.3"
+googleJavaFormat = "1.28.0"
+h2 = "2.3.232"
+junit-jupiter = "5.13.3"
+ktlint = "1.7.0"
+
+[libraries]
+errorprone = "com.google.errorprone:error_prone_core:2.40.0"
+flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
+h2 = { module = "com.h2database:h2", version.ref = "h2" }
+nullaway = "com.uber.nullaway:nullaway:0.12.7"
+truth = "com.google.truth:truth:1.4.4"
+
+# Versions used in build script, libraries added here for Dependabot
+googleJavaFormat = { module = "com.google.googlejavaformat:google-java-format", version.ref = "googleJavaFormat" }
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref="junit-jupiter" }
+ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
+
+[bundles]
+
+[plugins]
+errorprone = "net.ltgt.errorprone:4.3.0"
+gradlePluginPublish = "com.gradle.plugin-publish:1.3.1"
+nullaway = "net.ltgt.nullaway:2.2.0"
+spotless = "com.diffplug.spotless:7.1.0"
