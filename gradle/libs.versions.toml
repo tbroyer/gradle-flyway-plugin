@@ -1,7 +1,7 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 # Try to maintain entries sorted alphabetically inside each "group".
 [versions]
-flyway = "11.12.0"
+flyway = "11.13.1"
 googleJavaFormat = "1.28.0"
 h2 = "2.3.232"
 junit-jupiter = "5.13.4"
@@ -11,8 +11,8 @@ ktlint = "1.7.1"
 errorprone = "com.google.errorprone:error_prone_core:2.41.0"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
-nullaway = "com.uber.nullaway:nullaway:0.12.9"
-truth = "com.google.truth:truth:1.4.4"
+nullaway = "com.uber.nullaway:nullaway:0.12.10"
+truth = "com.google.truth:truth:1.4.5"
 
 # Versions used in build script, libraries added here for Dependabot
 googleJavaFormat = { module = "com.google.googlejavaformat:google-java-format", version.ref = "googleJavaFormat" }
