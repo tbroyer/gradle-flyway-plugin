@@ -27,6 +27,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.ltgt.gradle.flyway.FlywayExtension;
+import org.flywaydb.core.api.CoreLocationPrefix;
 import org.gradle.api.DefaultTask;
 import org.gradle.api.file.ConfigurableFileCollection;
 import org.gradle.api.file.RegularFile;
@@ -194,7 +195,7 @@ public abstract class FlywayTask extends DefaultTask {
               .put(
                   "flyway.locations",
                   getMigrationLocations().getFiles().stream()
-                      .map(f -> "filesystem:" + f.getPath())
+                      .map(f -> CoreLocationPrefix.FILESYSTEM_PREFIX + f.getPath())
                       .collect(Collectors.joining(",")));
           if (getTarget().isPresent()) {
             params.getConfiguration().put("flyway.target", getTarget().get());

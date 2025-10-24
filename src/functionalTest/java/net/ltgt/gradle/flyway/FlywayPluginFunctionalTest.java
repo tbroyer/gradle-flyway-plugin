@@ -25,7 +25,7 @@ import java.nio.file.Files;
 import java.sql.DriverManager;
 import java.sql.SQLSyntaxErrorException;
 import org.flywaydb.core.Flyway;
-import org.flywaydb.core.api.Location;
+import org.flywaydb.core.api.CoreLocationPrefix;
 import org.gradle.testkit.runner.BuildResult;
 import org.gradle.testkit.runner.TaskOutcome;
 import org.junit.jupiter.api.Test;
@@ -63,7 +63,7 @@ class FlywayPluginFunctionalTest extends BaseFunctionalTest {
     var flyway =
         Flyway.configure()
             .dataSource(database.getURL(), null, null)
-            .locations(Location.FILESYSTEM_PREFIX + migrationDir.toString())
+            .locations(CoreLocationPrefix.FILESYSTEM_PREFIX + migrationDir.toString())
             .load();
 
     BuildResult result;
