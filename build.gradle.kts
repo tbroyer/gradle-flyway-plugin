@@ -1,4 +1,5 @@
 import net.ltgt.gradle.errorprone.errorprone
+import net.ltgt.gradle.nullaway.nullaway
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
@@ -25,6 +26,15 @@ tasks {
     withType<JavaCompile>().configureEach {
         options.release = 21
         options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
+        if (!JavaVersion.current().isCompatibleWith(JavaVersion.VERSION_25)) {
+            // see https://github.com/uber/NullAway/wiki/JSpecify-Support#supported-jdk-versions
+            options.compilerArgs.add("-XDaddTypeAnnotationsToSymbol=true")
+        }
+        options.errorprone {
+            nullaway {
+                isJSpecifyMode = true
+            }
+        }
     }
     compileJava {
         options.release = 8
