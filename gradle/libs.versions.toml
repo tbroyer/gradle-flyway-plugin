@@ -1,11 +1,11 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 # Try to maintain entries sorted alphabetically inside each "group".
 [versions]
-flyway = "11.16.0"
+flyway = "11.17.1"
 googleJavaFormat = "1.32.0"
 h2 = "2.4.240"
 junit-jupiter = "6.0.1"
-ktlint = "1.7.1"
+ktlint = "1.8.0"
 
 [libraries]
 errorprone = "com.google.errorprone:error_prone_core:2.44.0"
@@ -25,4 +25,4 @@ ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
 errorprone = "net.ltgt.errorprone:4.3.0"
 gradlePluginPublish = "com.gradle.plugin-publish:2.0.0"
 nullaway = "net.ltgt.nullaway:2.3.0"
-spotless = "com.diffplug.spotless:8.0.0"
+spotless = "com.diffplug.spotless:8.1.0"
