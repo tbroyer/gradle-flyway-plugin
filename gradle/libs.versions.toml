@@ -1,14 +1,14 @@
 # https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
 # Try to maintain entries sorted alphabetically inside each "group".
 [versions]
-flyway = "11.17.1"
+flyway = "11.18.0"
 googleJavaFormat = "1.32.0"
 h2 = "2.4.240"
 junit-jupiter = "6.0.1"
 ktlint = "1.8.0"
 
 [libraries]
-errorprone = "com.google.errorprone:error_prone_core:2.44.0"
+errorprone = "com.google.errorprone:error_prone_core:2.45.0"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
 nullaway = "com.uber.nullaway:nullaway:0.12.12"
