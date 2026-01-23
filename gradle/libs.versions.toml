@@ -11,7 +11,7 @@ ktlint = "1.8.0"
 errorprone = "com.google.errorprone:error_prone_core:2.46.0"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
-nullaway = "com.uber.nullaway:nullaway:0.12.15"
+nullaway = "com.uber.nullaway:nullaway:0.13.0"
 truth = "com.google.truth:truth:1.4.5"
 
 # Versions used in build script, libraries added here for Dependabot
@@ -24,5 +24,5 @@ ktlint = { module = "com.pinterest.ktlint:ktlint-cli", version.ref = "ktlint" }
 [plugins]
 errorprone = "net.ltgt.errorprone:4.4.0"
 gradlePluginPublish = "com.gradle.plugin-publish:2.0.0"
-nullaway = "net.ltgt.nullaway:2.3.0"
-spotless = "com.diffplug.spotless:8.1.0"
+nullaway = "net.ltgt.nullaway:2.4.0"
+spotless = "com.diffplug.spotless:8.2.0"
