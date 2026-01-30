@@ -1,5 +1,4 @@
 import net.ltgt.gradle.errorprone.errorprone
-import net.ltgt.gradle.nullaway.nullaway
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 
 plugins {
@@ -21,16 +20,12 @@ dependencies {
 
 nullaway {
     onlyNullMarked = true
+    jspecifyMode = true
 }
 tasks {
     withType<JavaCompile>().configureEach {
         options.release = 21
         options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
-        options.errorprone {
-            nullaway {
-                isJSpecifyMode = true
-            }
-        }
     }
     compileJava {
         options.release = 8
