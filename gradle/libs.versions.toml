@@ -2,13 +2,13 @@
 # Try to maintain entries sorted alphabetically inside each "group".
 [versions]
 flyway = "12.0.0"
-googleJavaFormat = "1.33.0"
+googleJavaFormat = "1.34.1"
 h2 = "2.4.240"
 junit-jupiter = "6.0.2"
 ktlint = "1.8.0"
 
 [libraries]
-errorprone = "com.google.errorprone:error_prone_core:2.46.0"
+errorprone = "com.google.errorprone:error_prone_core:2.47.0"
 flyway-core = { module = "org.flywaydb:flyway-core", version.ref = "flyway" }
 h2 = { module = "com.h2database:h2", version.ref = "h2" }
 nullaway = "com.uber.nullaway:nullaway:0.13.1"
