@@ -36,6 +36,10 @@ tasks {
             disable("JavaxInjectOnAbstractMethod")
         }
     }
+    validatePlugins {
+        enableStricterValidation = true
+        failOnWarning = true
+    }
     javadoc {
         (options as CoreJavadocOptions).addBooleanOption("Xdoclint:all,-missing", true)
     }

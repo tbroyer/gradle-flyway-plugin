@@ -22,8 +22,10 @@ import org.gradle.api.tasks.InputFiles;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.SkipWhenEmpty;
+import org.gradle.api.tasks.UntrackedTask;
 
 /** The base class for Flyway tasks using migration scripts. */
+@UntrackedTask(because = "Depends on the database")
 public abstract class MigrationsFlywayTask extends FlywayTask {
   MigrationsFlywayTask(Class<? extends FlywayWorkAction> workActionClass) {
     super(workActionClass);

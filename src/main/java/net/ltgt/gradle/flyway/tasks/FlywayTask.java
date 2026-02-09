@@ -45,12 +45,14 @@ import org.gradle.api.tasks.Optional;
 import org.gradle.api.tasks.PathSensitive;
 import org.gradle.api.tasks.PathSensitivity;
 import org.gradle.api.tasks.TaskAction;
+import org.gradle.api.tasks.UntrackedTask;
 import org.gradle.api.tasks.options.Option;
 import org.gradle.jvm.toolchain.JavaLauncher;
 import org.gradle.workers.WorkQueue;
 import org.gradle.workers.WorkerExecutor;
 
 /** The base class for all Flyway tasks. */
+@UntrackedTask(because = "Depends on the database")
 public abstract class FlywayTask extends DefaultTask {
   private final Class<? extends FlywayWorkAction> workActionClass;
 
