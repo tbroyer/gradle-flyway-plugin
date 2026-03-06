@@ -1,5 +1,6 @@
 import net.ltgt.gradle.errorprone.errorprone
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.gradle.plugin.compatibility.compatibility
 
 plugins {
     `java-gradle-plugin`
@@ -120,6 +121,11 @@ gradlePlugin {
             displayName = "Gradle plugin for FlywayDB"
             description = "Adds Gradle tasks to run FlywayDB commands"
             tags.addAll("flyway", "flywaydb")
+            compatibility {
+                features {
+                    configurationCache = true
+                }
+            }
         }
     }
 }
