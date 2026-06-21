@@ -64,13 +64,14 @@ testing {
             }
         }
 
-        val test by getting(JvmTestSuite::class) {
-            dependencies {
-                implementation(project())
+        val test =
+            named<JvmTestSuite>("test") {
+                dependencies {
+                    implementation(project())
+                }
             }
-        }
 
-        val functionalTest by registering(JvmTestSuite::class) {
+        register<JvmTestSuite>("functionalTest") {
             dependencies {
                 implementation(gradleTestKit())
                 implementation(libs.flyway.core)
