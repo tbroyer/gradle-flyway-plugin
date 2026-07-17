@@ -4,7 +4,7 @@
 flyway = "12.11.0"
 googleJavaFormat = "1.35.0"
 h2 = "2.4.240"
-junit-jupiter = "6.1.1"
+junit-jupiter = "6.1.2"
 ktlint = "1.8.0"
 
 [libraries]
