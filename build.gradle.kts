@@ -25,7 +25,7 @@ nullaway {
 }
 tasks {
     withType<JavaCompile>().configureEach {
-        options.release = 21
+        options.release = 25
         options.compilerArgs.addAll(listOf("-Werror", "-Xlint:all"))
     }
     compileJava {
