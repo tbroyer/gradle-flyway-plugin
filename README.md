@@ -13,7 +13,7 @@ That being said, the plugin might be used in different situations: those needs m
 
 ## Compatibility
 
- * Gradle >= 8.5 (including Gradle 9)
+ * Gradle >= 8.5 (including Gradle 9; though it's only tested with the subset of versions covered by the [Gradle Security Subscription](https://gradle.org/security-subscription/))
  * Java >= 8 (though it's only tested with Java >= 17)
 
 It's built against the latest stable version of Flyway Community, but should work with earlier versions (as long as Flyway is backwards compatible).
