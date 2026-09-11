@@ -125,6 +125,7 @@ gradlePlugin {
             compatibility {
                 features {
                     configurationCache = true
+                    isolatedProjects = true
                 }
             }
         }
