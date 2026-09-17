@@ -22,11 +22,19 @@ import net.ltgt.gradle.flyway.tasks.FlywayMigrate;
 import net.ltgt.gradle.flyway.tasks.FlywayRepair;
 import net.ltgt.gradle.flyway.tasks.FlywayTask;
 import net.ltgt.gradle.flyway.tasks.MigrationsFlywayTask;
+import org.gradle.api.Named;
 import org.gradle.api.NamedDomainObjectProvider;
 import org.gradle.api.Plugin;
 import org.gradle.api.Project;
+import org.gradle.api.artifacts.Configuration;
 import org.gradle.api.artifacts.DependencyScopeConfiguration;
 import org.gradle.api.artifacts.ResolvableConfiguration;
+import org.gradle.api.attributes.Attribute;
+import org.gradle.api.attributes.Bundling;
+import org.gradle.api.attributes.Category;
+import org.gradle.api.attributes.LibraryElements;
+import org.gradle.api.attributes.Usage;
+import org.gradle.api.attributes.java.TargetJvmEnvironment;
 import org.gradle.api.file.RegularFile;
 import org.gradle.api.plugins.JavaPluginExtension;
 import org.gradle.api.provider.Provider;
@@ -74,7 +82,30 @@ abstract class FlywayPlugin implements Plugin<Project> {
         .getConfigurations()
         .resolvable(
             "flywayClasspath",
-            configuration -> configuration.extendsFrom(flywayConfiguration.get()));
+            configuration -> {
+              addAttribute(project, configuration, Category.CATEGORY_ATTRIBUTE, Category.LIBRARY);
+              addAttribute(project, configuration, Usage.USAGE_ATTRIBUTE, Usage.JAVA_RUNTIME);
+              addAttribute(
+                  project,
+                  configuration,
+                  LibraryElements.LIBRARY_ELEMENTS_ATTRIBUTE,
+                  LibraryElements.JAR);
+              addAttribute(project, configuration, Bundling.BUNDLING_ATTRIBUTE, Bundling.EXTERNAL);
+              addAttribute(
+                  project,
+                  configuration,
+                  TargetJvmEnvironment.TARGET_JVM_ENVIRONMENT_ATTRIBUTE,
+                  TargetJvmEnvironment.STANDARD_JVM);
+
+              configuration.extendsFrom(flywayConfiguration.get());
+            });
+  }
+
+  private <T extends Named> void addAttribute(
+      Project project, Configuration configuration, Attribute<T> attribute, String name) {
+    configuration
+        .getAttributes()
+        .attribute(attribute, project.getObjects().named(attribute.getType(), name));
   }
 
   private FlywayExtension registerExtension(Project project) {
