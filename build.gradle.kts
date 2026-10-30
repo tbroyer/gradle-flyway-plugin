@@ -22,6 +22,7 @@ dependencies {
 nullaway {
     onlyNullMarked = true
     jspecifyMode = true
+    jspecifyExperimental = true
 }
 tasks {
     withType<JavaCompile>().configureEach {
