@@ -130,20 +130,19 @@ abstract class FlywayPlugin implements Plugin<Project> {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .configureEach(
-            task -> {
-              task.getClasspath().from(flywayClasspathConfiguration);
-              task.getUrl().convention(flywayExtension.getUrl());
-              task.getUser().convention(flywayExtension.getUser());
-              task.getPassword().convention(flywayExtension.getPassword());
-              task.getConfigurationFile().convention(flywayExtension.getConfigurationFile());
-              task.getConfiguration().set(flywayExtension.getConfiguration());
-              if (task instanceof MigrationsFlywayTask) {
-                ((MigrationsFlywayTask) task)
-                    .getMigrationLocations()
-                    .from(flywayExtension.getMigrationLocations());
-              }
-            });
+        .configureEach(task -> {
+          task.getClasspath().from(flywayClasspathConfiguration);
+          task.getUrl().convention(flywayExtension.getUrl());
+          task.getUser().convention(flywayExtension.getUser());
+          task.getPassword().convention(flywayExtension.getPassword());
+          task.getConfigurationFile().convention(flywayExtension.getConfigurationFile());
+          task.getConfiguration().set(flywayExtension.getConfiguration());
+          if (task instanceof MigrationsFlywayTask) {
+            ((MigrationsFlywayTask) task)
+                .getMigrationLocations()
+                .from(flywayExtension.getMigrationLocations());
+          }
+        });
   }
 
   private void registerTasks(Project project) {
@@ -197,9 +196,8 @@ abstract class FlywayPlugin implements Plugin<Project> {
             project
                 .getTasks()
                 .named(mainSourceSet.getProcessResourcesTaskName())
-                .map(
-                    processResources ->
-                        new File(mainSourceSet.getOutput().getResourcesDir(), path)));
+                .map(processResources ->
+                    new File(mainSourceSet.getOutput().getResourcesDir(), path)));
   }
 
   private SourceSet getMainSourceSet(Project project) {

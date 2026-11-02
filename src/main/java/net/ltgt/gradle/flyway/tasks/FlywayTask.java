@@ -172,12 +172,11 @@ public abstract class FlywayTask extends DefaultTask {
     } else {
       workQueue =
           getWorkerExecutor()
-              .processIsolation(
-                  spec -> {
-                    spec.getClasspath().from(getClasspath());
-                    spec.forkOptions(
-                        forkOptions -> forkOptions.setExecutable(javaLauncher.getExecutablePath()));
-                  });
+              .processIsolation(spec -> {
+                spec.getClasspath().from(getClasspath());
+                spec.forkOptions(
+                    forkOptions -> forkOptions.setExecutable(javaLauncher.getExecutablePath()));
+              });
     }
     workQueue.submit(
         workActionClass,

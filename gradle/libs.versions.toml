@@ -2,7 +2,7 @@
 # Try to maintain entries sorted alphabetically inside each "group".
 [versions]
 flyway = "13.11.1"
-googleJavaFormat = "1.36.1"
+googleJavaFormat = "2.0.0"
 h2 = "2.5.252"
 junit-jupiter = "6.1.3"
 ktlint = "1.8.0"

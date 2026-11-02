@@ -71,27 +71,26 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              assertThat(flywayTask.getClasspath().getFrom())
-                  .comparingElementsUsing(
-                      Correspondence.transforming(
-                          input -> input instanceof Provider<?> provider ? provider.get() : input,
-                          "resolving providers"))
-                  .containsExactly(flywayClasspathConfiguration);
-              assertThat(flywayTask.getConfiguration().getOrNull()).isEmpty();
-              assertThat(flywayTask.getUrl().isPresent()).isFalse();
-              assertThat(flywayTask.getUser().isPresent()).isFalse();
-              assertThat(flywayTask.getPassword().isPresent()).isFalse();
-              assertThat(flywayTask.getConfigurationFile().isPresent()).isFalse();
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                assertThat(migrationsFlywayTask.getMigrationLocations().getFrom())
-                    .containsExactly(flywayExtension.getMigrationLocations());
-              }
-              if (flywayTask instanceof FlywayMigrate flywayMigrate) {
-                assertThat(flywayMigrate.getTarget().isPresent()).isFalse();
-              }
-            });
+        .forEach(flywayTask -> {
+          assertThat(flywayTask.getClasspath().getFrom())
+              .comparingElementsUsing(
+                  Correspondence.transforming(
+                      input -> input instanceof Provider<?> provider ? provider.get() : input,
+                      "resolving providers"))
+              .containsExactly(flywayClasspathConfiguration);
+          assertThat(flywayTask.getConfiguration().getOrNull()).isEmpty();
+          assertThat(flywayTask.getUrl().isPresent()).isFalse();
+          assertThat(flywayTask.getUser().isPresent()).isFalse();
+          assertThat(flywayTask.getPassword().isPresent()).isFalse();
+          assertThat(flywayTask.getConfigurationFile().isPresent()).isFalse();
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            assertThat(migrationsFlywayTask.getMigrationLocations().getFrom())
+                .containsExactly(flywayExtension.getMigrationLocations());
+          }
+          if (flywayTask instanceof FlywayMigrate flywayMigrate) {
+            assertThat(flywayMigrate.getTarget().isPresent()).isFalse();
+          }
+        });
 
     assertThat(project.getTasks().findByName("flywayClean")).isInstanceOf(FlywayClean.class);
     assertThat(project.getTasks().findByName("flywayMigrate")).isInstanceOf(FlywayMigrate.class);
@@ -116,11 +115,10 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              assertThat(flywayTask.getTaskDependencies().getDependencies(flywayTask))
-                  .contains(project.getTasks().getByName(JvmConstants.PROCESS_RESOURCES_TASK_NAME));
-            });
+        .forEach(flywayTask -> {
+          assertThat(flywayTask.getTaskDependencies().getDependencies(flywayTask))
+              .contains(project.getTasks().getByName(JvmConstants.PROCESS_RESOURCES_TASK_NAME));
+        });
   }
 
   @Test
@@ -141,19 +139,18 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              assertThat(flywayTask.getUrl().getOrNull()).isEqualTo("url");
-              assertThat(flywayTask.getUser().getOrNull()).isEqualTo("user");
-              assertThat(flywayTask.getPassword().getOrNull()).isEqualTo("password");
-              assertThat(flywayTask.getConfiguration().getOrNull()).containsExactly("key", "value");
-              assertThat(flywayTask.getConfigurationFile().getAsFile().getOrNull())
-                  .isEqualTo(project.file("flyway.conf"));
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
-                    .containsExactly(project.file("migrations"));
-              }
-            });
+        .forEach(flywayTask -> {
+          assertThat(flywayTask.getUrl().getOrNull()).isEqualTo("url");
+          assertThat(flywayTask.getUser().getOrNull()).isEqualTo("user");
+          assertThat(flywayTask.getPassword().getOrNull()).isEqualTo("password");
+          assertThat(flywayTask.getConfiguration().getOrNull()).containsExactly("key", "value");
+          assertThat(flywayTask.getConfigurationFile().getAsFile().getOrNull())
+              .isEqualTo(project.file("flyway.conf"));
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
+                .containsExactly(project.file("migrations"));
+          }
+        });
   }
 
   // This test shouldn't be necessary, had the documentation been clearer
@@ -168,20 +165,19 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              flywayTask.getConfiguration().put("task", "task");
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                migrationsFlywayTask.getMigrationLocations().from(project.file("task"));
-              }
+        .forEach(flywayTask -> {
+          flywayTask.getConfiguration().put("task", "task");
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            migrationsFlywayTask.getMigrationLocations().from(project.file("task"));
+          }
 
-              assertThat(flywayTask.getConfiguration().getOrNull())
-                  .containsExactly("extension", "extension", "task", "task");
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
-                    .containsExactly(project.file("extension"), project.file("task"));
-              }
-            });
+          assertThat(flywayTask.getConfiguration().getOrNull())
+              .containsExactly("extension", "extension", "task", "task");
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
+                .containsExactly(project.file("extension"), project.file("task"));
+          }
+        });
 
     // Adding entries to the extension after configuring the task
     flywayExtension.getConfiguration().put("new-key", "extension");
@@ -190,26 +186,24 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              assertThat(flywayTask.getConfiguration().getOrNull())
-                  .containsExactly(
-                      "extension", "extension", "task", "task", "new-key", "extension");
+        .forEach(flywayTask -> {
+          assertThat(flywayTask.getConfiguration().getOrNull())
+              .containsExactly("extension", "extension", "task", "task", "new-key", "extension");
 
-              // Overriding an entry from the extension with a new value
-              flywayTask.getConfiguration().put("new-key", "task");
+          // Overriding an entry from the extension with a new value
+          flywayTask.getConfiguration().put("new-key", "task");
 
-              assertThat(flywayTask.getConfiguration().getOrNull())
-                  .containsExactly("extension", "extension", "task", "task", "new-key", "task");
+          assertThat(flywayTask.getConfiguration().getOrNull())
+              .containsExactly("extension", "extension", "task", "task", "new-key", "task");
 
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
-                    .containsExactly(
-                        project.file("extension"),
-                        project.file("task"),
-                        project.file("other-extension"));
-              }
-            });
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
+                .containsExactly(
+                    project.file("extension"),
+                    project.file("task"),
+                    project.file("other-extension"));
+          }
+        });
 
     // Resetting the extension values
     flywayExtension.getConfiguration().set(Map.of("reset-extension", "extension"));
@@ -218,16 +212,14 @@ class FlywayPluginTest {
     project
         .getTasks()
         .withType(FlywayTask.class)
-        .forEach(
-            flywayTask -> {
-              assertThat(flywayTask.getConfiguration().getOrNull())
-                  .containsExactly(
-                      "reset-extension", "extension", "task", "task", "new-key", "task");
+        .forEach(flywayTask -> {
+          assertThat(flywayTask.getConfiguration().getOrNull())
+              .containsExactly("reset-extension", "extension", "task", "task", "new-key", "task");
 
-              if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
-                assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
-                    .containsExactly(project.file("reset-extension"), project.file("task"));
-              }
-            });
+          if (flywayTask instanceof MigrationsFlywayTask migrationsFlywayTask) {
+            assertThat(migrationsFlywayTask.getMigrationLocations().getFiles())
+                .containsExactly(project.file("reset-extension"), project.file("task"));
+          }
+        });
   }
 }
